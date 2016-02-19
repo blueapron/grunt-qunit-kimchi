@@ -2,10 +2,7 @@
  * grunt-qunit-kimchi
  * https://www.blueapron.com
  *
- * Some code copied and inspired from
- * https://github.com/gruntjs/grunt-lib-phantomjs
- *
- * Copyright (c) 2016 Blue Apron
+ * Copyright (c) 2016 Blue Apron Engineering
  * Licensed under the MIT license
  */
 
@@ -17,13 +14,13 @@ if(!global.qunitStatus) {
     passed: 0,
     total: 0,
     duration: 0
-  }
+  };
 }
 
 exports.init = function(g) {
   grunt = g;
   return exports;
-}
+};
 
 exports.status = global.qunitStatus;
 
@@ -50,7 +47,7 @@ exports.warnUnlessForced = function(force) {
 
   grunt.log.warn(msg.bold.red);
   grunt.log.writeln();
-}
+};
 
 exports.logFailedAssertions = function(failedAssertions) {
   failedAssertions.forEach(function(fail) {
@@ -74,4 +71,4 @@ exports.logFailedAssertions = function(failedAssertions) {
       grunt.log.error('    Source: '.bold + source.join('\n'));
     }
   });
-}
+};

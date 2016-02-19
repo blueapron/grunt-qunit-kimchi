@@ -5,7 +5,7 @@
  * Some code copied and inspired from
  * https://github.com/gruntjs/grunt-lib-phantomjs
  *
- * Copyright (c) 2016 Blue Apron
+ * Copyright (c) 2016 Blue Apron Engineering
  * Licensed under the MIT license
  */
 
@@ -33,9 +33,10 @@ module.exports = function(grunt) {
   // Resemble Task
   var resemble = require('./resemble.js')(grunt);
 
-  grunt.registerMultiTask('qunitTest', 'Run QUnit unit tests in a headless PhantomJS instance.', function() {
+  grunt.registerMultiTask('qunit', 'Run QUnit unit tests in a headless PhantomJS instance.', function() {
+    // asynchronous
+    var done = this.async();
 
-    // Merge task-specific and/or target-specific options with these defaults.
     options = this.options({
       // Default PhantomJS timeout.
       timeout: 5000,
@@ -52,7 +53,7 @@ module.exports = function(grunt) {
       options.screenshotPath = 'screenshot';
     }
 
-    if (options.httpBase) {
+    if(options.httpBase) {
       //If URLs are explicitly referenced, use them still
       urls = options.urls;
       // Then create URLs for the src files
@@ -64,7 +65,7 @@ module.exports = function(grunt) {
       urls = options.urls.concat(this.filesSrc);
     }
 
-    if (options.noGlobals) {
+    if(options.noGlobals) {
       // Append a noglobal query string param to all urls
       var parsed;
       urls = urls.map(function(testUrl) {
@@ -75,9 +76,6 @@ module.exports = function(grunt) {
       });
     }
 
-    // This task is asynchronous.
-    var done = this.async();
-
     // Clear terminal
     exec('clear', function(err, stdout, stderr) {
       sys.print(stdout);
@@ -85,67 +83,63 @@ module.exports = function(grunt) {
     });
 
     // Process each filepath in-order.
-    grunt.util.async.forEachSeries(urls, function(url, next) {
-      testUrl = url;
+    grunt.util.async.forEachSeries(urls,
+      function(url, callback) {
+        testUrl = url;
 
-      // Launch PhantomJS.
-      grunt.event.emit('qunit.spawn', url);
-      phantomjs.spawn(url, {
-        // Additional PhantomJS options.
-        options: options,
-        // Do stuff when done.
-        done: function(err) {
-          if (err) {
-            // If there was an error, abort the series.
-            done();
-          } else {
-            // Otherwise, process next url.
-            next();
-          }
-        },
-      });
-    },
-    // All tests have been run.
-    function() {
-      // Log results.
-      if (utils.status.failed > 0 || utils.status.total === 0) {
-        grunt.log.writeln();
-        grunt.log.writeln('Failed Assertions:');
-        // Log failed assertions
-        utils.logFailedAssertions(phantomjsHooks.failedAssertions);
-        // Warn unless force option is passed
-        utils.warnUnlessForced(options.force);
-      }
-      else {
-        grunt.log.writeln();
-        grunt.log.ok(utils.status.total.toString().green + ' assertions passed');
-        grunt.log.ok('duration: ' + utils.status.duration + 'ms');
-      }
+        grunt.event.emit('qunit.spawn', url);
+        // Launch PhantomJS.
+        phantomjs.spawn(url, {
+          // Additional PhantomJS options.
+          options: options,
+          // Do stuff when done.
+          done: function(err) {
+            if(err) { done(); }
+            else { callback(); }
+          },
+        });
+      },
+      // All tests have been run.
+      function() {
+        // Log results.
+        if (utils.status.failed > 0 || utils.status.total === 0) {
+          grunt.log.writeln();
+          grunt.log.writeln('Failed Assertions:');
+          // Log failed assertions
+          utils.logFailedAssertions(phantomjsHooks.failedAssertions);
+          // Warn unless force option is passed
+          utils.warnUnlessForced(options.force);
+        }
+        else {
+          grunt.log.writeln();
+          grunt.log.ok(utils.status.total.toString().green + ' assertions passed');
+          grunt.log.ok('duration: ' + utils.status.duration + 'ms');
+        }
 
-      // If resemble is on
-      if(options.resemble && options.originalScreenshotPath) {
-       resembleOptions = typeof options.resemble === 'object' ? options.resemble : {};
+        // If resemble is on
+        if(options.resemble && options.originalScreenshotPath) {
+         resembleOptions = typeof options.resemble === 'object' ? options.resemble : {};
 
-        grunt.config.merge({
-          'qunit-resemble': {
-            qunit: {
-              options: {
-                screenshotPath: options.screenshotPath,
-                originalScreenshotPath: options.originalScreenshotPath,
-                diffScreenshotPath: options.diffScreenshotPath,
-                errorDiffPath: options.errorDiffPath,
-                errorColor: resembleOptions.errorColor,
-                errorType: resembleOptions.errorType,
-                transparency: resembleOptions.transparency
+          grunt.config.merge({
+            'qunit-resemble': {
+              qunit: {
+                options: {
+                  screenshotPath: options.screenshotPath,
+                  originalScreenshotPath: options.originalScreenshotPath,
+                  diffScreenshotPath: options.diffScreenshotPath,
+                  errorDiffPath: options.errorDiffPath,
+                  errorColor: resembleOptions.errorColor,
+                  errorType: resembleOptions.errorType,
+                  transparency: resembleOptions.transparency
+                }
               }
             }
-          }
-        });
+          });
 
-        grunt.task.run('qunit-resemble:qunit');
-      }
+          grunt.task.run('qunit-resemble:qunit');
+        }
 
-      done(utils.status.failed === 0);
-    });
+        done(utils.status.failed === 0);
+      });
   });
-}
+};

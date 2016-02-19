@@ -5,7 +5,7 @@
  * Some code copied and inspired from
  * https://github.com/gruntjs/grunt-lib-phantomjs
  *
- * Copyright (c) 2016 Blue Apron
+ * Copyright (c) 2016 Blue Apron Engineering
  * Licensed under the MIT license
  */
 
@@ -72,6 +72,6 @@ exports.init = function(grunt) {
   });
 
   return phantomjs;
-}
+};
 
 exports.failedAssertions = failedAssertions;

@@ -5,11 +5,11 @@
  * Some code copied and inspired from
  * https://github.com/gruntjs/grunt-lib-phantomjs
  *
- * Copyright (c) 2016 Blue Apron
+ * Copyright (c) 2016 Blue Apron Engineering
  * Licensed under the MIT license
  */
 
-/* global QUnit:true */
+/* global QUnit:true, window:true, document:true, define:true */
 
 (function(factory) {
   if(typeof define === 'function' && define.amd) {
@@ -20,11 +20,6 @@
   }
 })(function(QUnit) {
   'use strict';
-
-  // // No need to reorder tests
-  // QUnit.config.reorder = false;
-  // // Don't auto start QUnit tests
-  // QUnit.config.autorun = false;
 
   // Seding callback to phantomjs webpage
   function sendMessage() {
@@ -41,23 +36,7 @@
       path: options.path,
       rect: options.rect
     });
-  }
-
-  $('#backbone-testing-container').css({
-    width: '100%',
-    height: '100%',
-    border: 'none',
-    top: 0,
-    left: 0,
-  });
-
-  $('#backbone-testing-container #header-main').css({
-    position: 'fixed',
-  });
-
-  $('#body-wrap').css({
-    zoom: '100%'
-  });
+  };
 
   // Callbacks for QUnit
   QUnit.log(function(obj) {

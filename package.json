@@ -1,0 +1,45 @@
+{
+  "name": "grunt-qunit-kimchi",
+  "version": "0.0.1",
+  "description": "Grunt QUnit Plugin with Screenshot and Style Regression Test.",
+  "author": {
+    "name": "Blueapron Engineering",
+    "url": "https://www.blueapron.com"
+  },
+  "license": "MIT",
+  "engines": {
+    "node": ">=0.10.0"
+  },
+  "scripts": {
+    "test": "grunt test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/blueapron/grunt-qunit-kimchi"
+  },
+  "keywords": [
+    "gruntplugin",
+    "qunit",
+    "phantomjs",
+    "screenshot"
+  ],
+  "bugs": {
+    "url": "https://github.com/blueapron/grunt-qunit-kimchi/issues"
+  },
+  "homepage": "https://github.com/blueapron/grunt-qunit-kimchi",
+  "devDependencies": {
+    "grunt": "^0.4.5",
+    "grunt-cli": "^0.1.13",
+    "grunt-contrib-connect": "^0.11.2",
+    "grunt-contrib-jshint": "^0.11.3"
+  },
+  "dependencies": {
+    "grunt-phantomjs-basil": "0.0.1",
+    "node-resemble-js": "^0.0.5"
+  },
+  "main": "tasks/qunit.js",
+  "files": [
+    "tasks",
+    "phantomjs"
+  ]
+}

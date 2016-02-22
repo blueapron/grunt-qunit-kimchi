@@ -72,10 +72,11 @@ Default: ```5000```
 
 #### viewportSize
 Type: ```Object``` <br />
-Default: ```null```
+Default: ```phantomjs default```
 
 Overrides default viewport size of phantomjs (width: 320px)
 Example:
+
 ```javascript
 viewportSize: {
   width: 1100,
@@ -91,24 +92,25 @@ Path where screenshots are saved within the root folder of the project
 
 #### originalScreenshotPath
 Type: ```String``` <br />
-Default: ```null```
+Default: ```"original_screenshots"```
 
 Path where original screenshots are stored within the root folder of the project to compare with the screenshots under ```screenshotPath```
 
 #### diffScreenshotPath
 Type: ```String``` <br />
-Default: ```null```
+Default: ```"diff_screenshots"```
 
 Path where diff screenshots generated with resemble.js are saved within the root folder of the project
 
 #### resemble
 Type: ```Boolean``` or ```Object``` <br />
-Default: ```null```
+Default: ```false```
 
 Uses resemble.js for screenshot image analysis and comparison
 [https://huddle.github.io/Resemble.js/](https://huddle.github.io/Resemble.js/)
 
 Example:
+
 ```javascript
 resemble: {
   errorColor: {
@@ -137,7 +139,7 @@ Default: ```false```
 
 #### httpBase
 Type: ```String``` <br />
-Default: ```null```
+Default: ```false```
 
 Create URLs for the src files, all src files are prefixed with that base.
 
@@ -156,5 +158,7 @@ options: {
 ```
 
 # Usage Examples
+TODO
 
 # Release History
+v0.0.1 Initial Release

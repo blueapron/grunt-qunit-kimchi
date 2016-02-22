@@ -43,6 +43,16 @@
             }
           }
 
+          // Hide dom element specified by each item in exclude array
+          if(Array.isArray(exclude)) {
+            exclude.forEach(function(dom) {
+              var elem = document.querySelector(dom);
+              if(elem) {
+                elem.style.visibility = 'hidden';
+              }
+            });
+          }
+
           // bubbling to phantomjs to trigger screenshot event
           window.PhantomScreenshot(name, {
             path: path,

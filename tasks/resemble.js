@@ -69,9 +69,12 @@ module.exports = function(grunt) {
         screenshotFile = grunt.file.read(screenshots[key], {
           encoding: 'base64'
         });
-      }
 
-      qunitResemble.resemble(key, callback);
+        qunitResemble.resemble(key, callback);
+      }
+      else {
+        callback();
+      }
     },
     done: function() {
       var throwError = false;

@@ -29,6 +29,7 @@ module.exports = function(grunt) {
       // Resemble module to compare two screenshots
       resemble(originalScreenshots[key])
       .compareTo(screenshots[key])
+      .ignoreColors()
       .ignoreAntialiasing() // ignore anti aliasing
       .onComplete(function(data) {
         var misMatchPercentage = Number(data.misMatchPercentage);

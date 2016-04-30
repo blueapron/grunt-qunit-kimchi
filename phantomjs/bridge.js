@@ -48,6 +48,8 @@
 
       actual = dump.parse(obj.actual);
       expected = dump.parse(obj.expected);
+
+      window.PhantomScreenshot(Date.now()+'_'+Math.random() * 100000);
     }
 
     // Send it.

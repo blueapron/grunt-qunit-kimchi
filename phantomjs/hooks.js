@@ -31,6 +31,8 @@ exports.init = function(grunt) {
       // push failed object to array
       failedAssertions.push(obj);
       grunt.log.write('✗'.red);
+      grunt.log.writeln(obj.message);
+      grunt.log.writeln(obj.source);
     }
   });
 

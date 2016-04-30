@@ -52,8 +52,6 @@
       window.PhantomScreenshot(Date.now()+'_'+Math.random() * 100000);
     }
 
-    window.PhantomScreenshot(Date.now()+'_'+Math.random() * 100000);
-
     // Send it.
     sendMessage('qunit.log', {
       result: obj.result,

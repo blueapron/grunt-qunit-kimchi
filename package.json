@@ -37,7 +37,7 @@
     "qunitjs": "^1.20.0"
   },
   "dependencies": {
-    "grunt-phantomjs-basil": "git+ssh://git@github.com:blueapron/grunt-phantomjs-basil.git#0.1.0",
+    "grunt-phantomjs-basil": "0.0.1",
     "node-resemble-js": "^0.0.5"
   },
   "main": "tasks/qunit.js",

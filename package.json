@@ -1,6 +1,6 @@
 {
   "name": "grunt-qunit-kimchi",
-  "version": "0.1.0",
+  "version": "0.1.2",
   "description": "Grunt QUnit Plugin with Screenshot Support and Style Regression Test.",
   "author": {
     "name": "Blueapron Engineering",
@@ -38,7 +38,7 @@
   },
   "dependencies": {
     "grunt-phantomjs-basil": "0.0.1",
-    "node-resemble-js": "^0.0.5"
+    "node-resemble-js": "^0.1.1"
   },
   "main": "tasks/qunit.js",
   "files": [

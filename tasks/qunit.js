@@ -12,7 +12,7 @@
 'use strict';
 
 module.exports = function(grunt) {
-  var options, resembleOptions, urls, testUrl = '';
+  var options, resembleOptions, urls, testUrl = '', retry = {};
 
   // Nodejs libs.
   var path = require('path');
@@ -85,6 +85,10 @@ module.exports = function(grunt) {
     // Process each filepath in-order.
     grunt.util.async.forEachSeries(urls,
       function(url, callback) {
+        if (url.indexOf('rerunTests') === -1) {
+          retry[url] = 0;
+        }
+
         testUrl = url;
 
         grunt.event.emit('qunit.spawn', url);
@@ -95,7 +99,26 @@ module.exports = function(grunt) {
           // Do stuff when done.
           done: function(err) {
             if(err) { done(); }
-            else { callback(); }
+            else {
+              if (retry[url] === 0 && phantomjsHooks.failedTests.length > 0) {
+                var failedAssertions = phantomjsHooks.failedAssertions.filter(function (failed) {
+                  return phantomjsHooks.failedTests.indexOf(failed.testId) === -1;
+                });
+
+                phantomjsHooks.updateFailedAssertions(failedAssertions);
+
+                urls.push(url + '&rerunTests=' + phantomjsHooks.failedTests.join(','));
+
+                utils.status.failed = failedAssertions.length;
+
+                retry[url]++;
+                grunt.log.writeln('');
+                grunt.log.writeln('Retrying ' + phantomjsHooks.failedTests.length + ' failed tests');
+                phantomjsHooks.failedTests = [];
+              }
+
+              callback();
+            }
           },
         });
       },

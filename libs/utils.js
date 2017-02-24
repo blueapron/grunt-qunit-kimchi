@@ -10,6 +10,7 @@ var grunt;
 
 if(!global.qunitStatus) {
   global.qunitStatus = {
+    failedTests: [],
     failed: 0,
     passed: 0,
     total: 0,

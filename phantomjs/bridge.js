@@ -48,12 +48,11 @@
 
       actual = dump.parse(obj.actual);
       expected = dump.parse(obj.expected);
-
-      window.PhantomScreenshot(Date.now()+'_'+Math.random() * 100000);
     }
 
     // Send it.
     sendMessage('qunit.log', {
+      testId: obj.testId,
       result: obj.result,
       actual: actual,
       expected: expected,
@@ -81,6 +80,7 @@
 
   QUnit.testDone(function(obj) {
     sendMessage('qunit.testDone', {
+      testId: obj.testId,
       name: obj.name,
       failed: obj.failed,
       passed: obj.passed,

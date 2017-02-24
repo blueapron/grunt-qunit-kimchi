@@ -9,7 +9,7 @@
  * Licensed under the MIT license
  */
 
-var grunt, failedAssertions = [], currentModule = '', currentTest = '';
+var grunt, failedAssertions = [], currentModule = '', currentTest = '', failedTests = [];
 
 /**
  * module.exports
@@ -51,7 +51,9 @@ exports.init = function(grunt) {
   });
 
   phantomjs.on('qunit.testDone', function(obj) {
-
+    if (obj.failed > 0) {
+      failedTests.push(obj.testId);
+    }
   });
 
   phantomjs.on('qunit.begin', function(title) {
@@ -76,4 +78,9 @@ exports.init = function(grunt) {
   return phantomjs;
 };
 
+exports.updateFailedAssertions = function(failed) {
+  failedAssertions = failed;
+}
+
 exports.failedAssertions = failedAssertions;
+exports.failedTests = failedTests;

@@ -1,6 +1,6 @@
 {
   "name": "grunt-qunit-kimchi",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Grunt QUnit Plugin with Screenshot Support and Style Regression Test.",
   "author": {
     "name": "Blueapron Engineering",
